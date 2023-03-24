@@ -1,36 +1,66 @@
-﻿@model EntityLayer.Concrate.Blog
+﻿@model BlogVM
 
 @{
     ViewData["Title"] = "BlogAdd";
     Layout = "~/Views/Shared/WriterLayout.cshtml";
 }
 
-<h1>BlogAdd</h1>
 
-@using (Html.BeginForm("BlogAdd", "Blog", FormMethod.Post))
-{
-     @Html.Label("Blog başlığı")
-     @Html.TextBoxFor(x=>x.BlogTitle , new {@class ="form-control"})
-     @Html.ValidationMessageFor(x=>x.BlogTitle)
-     <br/>  
+<h1>Haber Ekleme</h1>
+<form asp-action="BlogAdd" asp-controller="Blog" method="post" enctype="multipart/form-data">
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+            <label for="validationCustom01">Haber Başlık</label>
+            <input type="text" asp-for="Blog.BlogTitle" class="form-control" id="validationDefault01"
+                   placeholder="Başlığı Giriniz" required>
+            <span asp-validation-for="Blog.BlogTitle" class="text-danger"></span>
+        </div>
+    </div>
+    <br>
 
-    @Html.Label("Blog görseli")
-    @Html.TextBoxFor(x=>x.BlogImage , new {@class ="form-control"})
-    @Html.ValidationMessageFor(x=>x.BlogImage)
-    <br />
-    @Html.Label("Blog küçük görseli")
-    @Html.TextBoxFor(x=>x.BlogThumbnailImage , new {@class ="form-control"})
-    <br />
-    @Html.Label("kategori")
-    @Html.DropDownListFor(x=>x.CategoryID, ( List<SelectListItem>) ViewBag.cv, new {@class="form-control"})
-    <br />
-    @Html.Label("Blog içeriği")
-    @Html.TextAreaFor(x=>x.BlogContent  ,15,3, new {@class ="form-control"})
-    @Html.ValidationMessageFor(x=>x.BlogContent)
-    <br />
+ <div class="form-row">
+        <div class="col-md-6 mb-3">
+            <label for="validationCustom01">Haber Başlık</label>
+            <input type="text" asp-for="Blog.BlogImage" class="form-control" id="validationDefault01"
+                   placeholder="Başlığı Giriniz" required>
+            <span asp-validation-for="Blog.BlogImage" class="text-danger"></span>
+        </div>
+    </div>
+    <br>
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+            <label for="validationCustom01">Haber Başlık</label>
+            <input type="text" asp-for="Blog.BlogThumbnailImage" class="form-control" id="validationDefault01"
+                   placeholder="Başlığı Giriniz" required>
+            <span asp-validation-for="Blog.BlogThumbnailImage" class="text-danger"></span>
+        </div>
+    </div>
 
-    <button class="btn btn-info">kaydet</button>
+    <div class="form-group mb-3">
+        <label class="form-label" asp-for="Blog.CategoryID">Category</label>
+        <select class="form-select" asp-for="Blog.CategoryID">
+            <option value="" selected>Select</option>
+            @foreach (var item in Model.Categories)
+            {
+                <option value="@item.CategoryID">@item.CategoryName</option>
+
+            }
+        </select>
+        <span class="text-danger" asp-validation-for="Blog.CategoryID"></span>
+    </div>
 
 
-}
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+            <label for="validationCustom02">Haber İçeriği</label>
+            <textarea asp-for="Blog.BlogContent" class="form-control" id="validationDefault02" cols="30" rows="10"
+                      placeholder="Blog İçeriğini Giriniz" required></textarea>
+            <span asp-validation-for="Blog.BlogContent" class="text-danger"></span>
+        </div>
+    </div>
+    <button type="submit" asp-action="BlogAdd" asp-controller="Blog" class="btn btn-info">Haber Ekle</button>
+</form>
+
+
+
 

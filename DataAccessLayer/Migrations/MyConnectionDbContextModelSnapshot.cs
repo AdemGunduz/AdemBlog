@@ -103,11 +103,9 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CategoryDescription")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("CategoryName")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<bool>("CategoryStatus")
@@ -263,6 +261,50 @@ namespace DataAccessLayer.Migrations
                     b.HasKey("NotificationID");
 
                     b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrate.Rol", b =>
+                {
+                    b.Property<int>("RolID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("RolName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("RolID");
+
+                    b.ToTable("Rols");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrate.User", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserMail")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("UserPassword")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("UserStatus")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrate.Writer", b =>

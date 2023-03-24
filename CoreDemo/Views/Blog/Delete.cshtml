@@ -1,0 +1,43 @@
+﻿@model EntityLayer.Concrate.Blog
+
+<form method="post" asp-controller="Comment" asp-action="Delete">
+    <input asp-for="BlogID" hidden />
+    <div class="border pt-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Blog Sil</h2>
+            <hr />
+        </div>
+        <div asp-validation-summary="All"></div>
+        <div class="mb-3">
+            <label asp-for="BlogID">Blog Id</label>
+            <input asp-for="BlogID" disabled class="form-control" />
+
+        </div>
+        <div class="mb-3">
+            <label asp-for="BlogID">BlogID</label>
+            <input asp-for="BlogID" disabled class="form-control" />
+
+        </div>
+        <div class="mb-3">
+            <label asp-for="BlogTitle">Blog Başlığı</label>
+            <input asp-for="BlogTitle" disabled class="form-control" />
+
+        </div>
+        <div class="mb-3">
+            <label asp-for="BlogContent">Blog Açıklaması</label>
+            <input asp-for="BlogContent" disabled class="form-control" />
+
+        </div>
+
+        <button type="submit" class="btn btn-danger" style="widht:150px">Sil</button>
+        <a asp-controller="Blog" asp-action="BlogListByWriter" class="btn btn-secondary" style="150px">
+            Listeye Dön
+        </a>
+    </div>
+</form>
+@section Scripts
+    {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

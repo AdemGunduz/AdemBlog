@@ -16,6 +16,9 @@ namespace BusinessLayer.Abstract
 		//void CategoryUpdate(Category category);
 
 		List<Comment> GetList(int id);
+
+		void Delete(Comment t);
+
 		//Category GetById(int id);
 	}
 }

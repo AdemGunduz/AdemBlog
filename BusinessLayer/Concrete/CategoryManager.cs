@@ -13,7 +13,7 @@ namespace BusinessLayer.Concrete
     public class CategoryManager : ICategoryService
     {
 
-        ICategoryDal _categoryDal;
+       private readonly ICategoryDal _categoryDal;
 
    
         public CategoryManager(ICategoryDal categoryDal)
@@ -21,21 +21,6 @@ namespace BusinessLayer.Concrete
             _categoryDal = categoryDal;
         }
 
-        //public void CategoryAdd(Category category)
-        //{
-        //    _categoryDal.Insert(category);
-
-        //}
-
-        //public void CategoryRemove(Category category)
-        //{
-        //    _categoryDal.Delete(category);
-        //}
-
-        //public void CategoryUpdate(Category category)
-        //{
-        //   _categoryDal.Update(category);   
-        //}
 
         
         

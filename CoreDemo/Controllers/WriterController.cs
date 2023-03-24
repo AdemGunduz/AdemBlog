@@ -24,15 +24,20 @@ namespace CoreDemo.Controllers
 			ViewBag.v2=writerName;
 			return View();
 		}
+		[Authorize]
 		public IActionResult WriterProfile()
 		{
 			return View();
 		}
-		public IActionResult WriterMail()
+        [Authorize]
+
+        public IActionResult WriterMail()
+
 		{
 			return View();
 		}
-		public IActionResult Test()
+        [Authorize]
+        public IActionResult Test()
 		{
             var usermail = User.Identity.Name;
             ViewBag.v = usermail;
@@ -41,7 +46,8 @@ namespace CoreDemo.Controllers
             ViewBag.v2 = writerName;
             return View();
         }
-		[AllowAnonymous]
+        [Authorize]
+        [AllowAnonymous]
 		[HttpGet]
 		public IActionResult WriterEditProfile()
 		{
@@ -50,7 +56,8 @@ namespace CoreDemo.Controllers
             var writervalues = wm.TGetById(1);
 			return View(writervalues);
 		}
-		[HttpPost]
+        [Authorize]
+        [HttpPost]
 		[AllowAnonymous]
 		public IActionResult WriterEditProfile(Writer p )
 		{
@@ -73,13 +80,15 @@ namespace CoreDemo.Controllers
 			}
 			return View();
 		}
-		[AllowAnonymous]
+        [Authorize]
+        [AllowAnonymous]
 		[HttpGet]
 		public IActionResult WriterAdd()
 		{
 			return View();	
 			
 		}
+        [Authorize]
         [AllowAnonymous]
         [HttpPost]
 
@@ -107,7 +116,8 @@ namespace CoreDemo.Controllers
 			wm.TAdd(w);
 			return RedirectToAction("Index", "Dashboard");
 		}
-		public PartialViewResult WriterNavbarPartial() 
+        [Authorize]
+        public PartialViewResult WriterNavbarPartial() 
 		{
             var usermail = User.Identity.Name;
             MyConnectionDbContext c = new MyConnectionDbContext();
