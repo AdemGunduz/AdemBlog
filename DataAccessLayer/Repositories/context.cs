@@ -2,7 +2,7 @@
 
 namespace DataAccessLayer.Repositories
 {
-    internal class context
+    public class context
     {
         public context()
         {

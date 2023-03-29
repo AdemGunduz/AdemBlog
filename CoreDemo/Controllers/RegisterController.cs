@@ -2,6 +2,7 @@
 using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntitiyFramwork;
 using EntityLayer.Concrate;
+using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +10,7 @@ namespace CoreDemo.Controllers
 {
 	public class RegisterController : Controller
 	{
-		WriterManager wm = new WriterManager(new EfWriterRepository());
+		UserManager wm = new UserManager(new EfUserRepository());
 
 		[HttpGet]
 		public IActionResult Index()
@@ -17,16 +18,15 @@ namespace CoreDemo.Controllers
 			return View();
 		}
 		[HttpPost]
-
-		public IActionResult Index(Writer p)
+		public IActionResult Index(User p)
 		{
 			WriterValidator wv = new WriterValidator();
 			ValidationResult results = wv.Validate(p);
 			if (results.IsValid)
 			{
-				p.WriterStatus = true;
-				p.WriterAbout = "deneme testi";
-				wm.WriterAdd(p);
+				p.UserStatus = true;
+				p.RoleId = 2;
+				wm.TAdd(p);
 				return RedirectToAction("Index", "Blog");
 			}
 			else

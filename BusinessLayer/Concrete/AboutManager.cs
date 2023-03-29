@@ -43,9 +43,6 @@ namespace BusinessLayer.Concrete
             throw new NotImplementedException();
         }
 
-        List<Category> IGenericService<About>.GetList()
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

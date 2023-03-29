@@ -27,9 +27,9 @@ namespace EntityLayer.Concrate
         public int CategoryID { get; set; }
 
         public virtual Category Category  { get; set; }
-		public int WriterID { get; set; }
+		public int UserID { get; set; }
 
-		public virtual Writer Writer { get; set; }
+		public virtual User User { get; set; }
 
 		public virtual List<Comment> Comments  { get; set; }
     }

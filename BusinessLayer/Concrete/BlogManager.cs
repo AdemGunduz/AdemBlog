@@ -61,7 +61,7 @@ namespace BusinessLayer.Concrete
 		}
 		public List<Blog> GetBlogListByWriter(int id)
 		{
-			return _blogDal.GetListAll(x => x.WriterID == id);
+			return _blogDal.GetListAll(x => x.UserID == id);
 		}
 
         public void TAdd(Blog t)
@@ -77,16 +77,6 @@ namespace BusinessLayer.Concrete
         public void TUpdate(Blog t)
         {
 			_blogDal.Update(t);
-        }
-
-        List<Category> IGenericService<Blog>.GetList()
-        {
-            throw new NotImplementedException();
-        }
-
-        Category IGenericService<Blog>.TGetById(int id)
-        {
-            throw new NotImplementedException();
         }
 
         public List<Blog> GetBlogsWithCategory()

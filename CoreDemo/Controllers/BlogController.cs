@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace CoreDemo.Controllers
 {
    
-    [Authorize(Roles = "Writer")]
+   
     public class BlogController : Controller
     {
         BlogManager bm = new BlogManager(new EfBlogRepository());
@@ -31,6 +31,7 @@ namespace CoreDemo.Controllers
             var values = bm.GetBlogByID(id);
             return View(values);
         }
+        [Authorize(Roles = "Writer")]
         public IActionResult BlogListByWriter()
         {
             var Username = User.Identity.Name;
@@ -38,7 +39,8 @@ namespace CoreDemo.Controllers
             var values = bm.GetBlogListByWriter(UserId);
             return View(values);
         }
-        
+        [Authorize(Roles = "Writer")]
+
         [HttpGet]
         public IActionResult BlogAdd()
         {
@@ -50,6 +52,7 @@ namespace CoreDemo.Controllers
             };
             return View(news);
         }
+        [Authorize(Roles = "Writer")]
         [HttpPost]
         public IActionResult BlogAdd(BlogVM p)
         {
@@ -62,7 +65,7 @@ namespace CoreDemo.Controllers
             {
                 p.Blog.BlogStatus = true;
                 p.Blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
-                p.Blog.WriterID = UserId;
+                p.Blog.UserID = UserId;
                 bm.TAdd(p.Blog);
                 return RedirectToAction("BlogListByWriter", "Blog");
             }
@@ -75,6 +78,7 @@ namespace CoreDemo.Controllers
             }
             return View();
         }
+        [Authorize(Roles = "Writer")]
         [HttpPost]
         public IActionResult DeleteBlog(int id)
         {
@@ -82,6 +86,7 @@ namespace CoreDemo.Controllers
             bm.TDelete(blogvalue);
             return RedirectToAction("BlogListByWriter");
         }
+        [Authorize(Roles = "Writer")]
         [HttpGet]
         public IActionResult EditBlog(int id) 
         {
@@ -97,11 +102,12 @@ namespace CoreDemo.Controllers
             ViewBag.cv = categoryvalues;
             return View(blogvalue);
         }
+        [Authorize(Roles = "Writer")]
         [HttpPost]
         
         public IActionResult EditBlog(Blog p)
         {
-            p.WriterID = 1;
+            p.UserID = 1;
             p.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
             p.BlogStatus = true;
             bm.TUpdate(p);

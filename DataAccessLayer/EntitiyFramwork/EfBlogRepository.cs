@@ -25,7 +25,7 @@ namespace DataAccessLayer.EntitiyFramwork
         {
             using (var c = new MyConnectionDbContext())
             {
-                return c.Blogs.Include(x => x.Category).Where(x=>x.WriterID==id ).ToList();
+                return c.Blogs.Include(x => x.Category).Where(x=>x.UserID==id ).ToList();
             }
         }
     }

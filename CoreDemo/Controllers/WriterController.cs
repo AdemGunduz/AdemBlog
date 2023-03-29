@@ -13,53 +13,55 @@ namespace CoreDemo.Controllers
 {
 	public class WriterController : Controller
 	{
-		WriterManager wm = new WriterManager(new EfWriterRepository());
-		[Authorize]
+		MyConnectionDbContext c = new MyConnectionDbContext();
+		UserManager wm = new UserManager(new EfUserRepository());
+		
 		public IActionResult Index()
 		{
 			var usermail = User.Identity.Name;
 			ViewBag.v = usermail;
 			MyConnectionDbContext c = new MyConnectionDbContext();
-			var writerName = c.Writers.Where(x=>x.WriterMail==usermail).Select(y=>y.WriterName).FirstOrDefault(); 
+			var writerName = c.Users.Where(x=>x.UserMail==usermail).Select(y=>y.UserName).FirstOrDefault(); 
 			ViewBag.v2=writerName;
 			return View();
 		}
-		[Authorize]
+	
 		public IActionResult WriterProfile()
 		{
 			return View();
 		}
-        [Authorize]
+        
 
         public IActionResult WriterMail()
 
 		{
 			return View();
 		}
-        [Authorize]
+       
         public IActionResult Test()
 		{
             var usermail = User.Identity.Name;
             ViewBag.v = usermail;
             MyConnectionDbContext c = new MyConnectionDbContext();
-            var writerName = c.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterName).FirstOrDefault();
+            var writerName = c.Users.Where(x => x.UserMail == usermail).Select(y => y.UserName).FirstOrDefault();
             ViewBag.v2 = writerName;
             return View();
         }
-        [Authorize]
+        
         [AllowAnonymous]
 		[HttpGet]
 		public IActionResult WriterEditProfile()
 		{
-            
-			
-            var writervalues = wm.TGetById(1);
+
+			var Username = User.Identity.Name;
+			var UserId = c.Users.Where(x => x.UserMail == Username).Select(y => y.ID).FirstOrDefault();
+			var writervalues = wm.GetById(UserId);
 			return View(writervalues);
 		}
-        [Authorize]
+        
         [HttpPost]
 		[AllowAnonymous]
-		public IActionResult WriterEditProfile(Writer p )
+		public IActionResult WriterEditProfile(User p )
 		{
 			WriterValidator wl = new WriterValidator();
 			ValidationResult results = wl.Validate(p);
@@ -80,7 +82,7 @@ namespace CoreDemo.Controllers
 			}
 			return View();
 		}
-        [Authorize]
+       
         [AllowAnonymous]
 		[HttpGet]
 		public IActionResult WriterAdd()
@@ -88,40 +90,39 @@ namespace CoreDemo.Controllers
 			return View();	
 			
 		}
-        [Authorize]
-        [AllowAnonymous]
-        [HttpPost]
 
-        public IActionResult WriterAdd(AddProfileImage p)
-		{
-			Writer w = new Writer();
-			if (p.WriterImage != null)
-			{
-				var extension = Path.GetExtension(p.WriterImage.FileName);
-				var newimagename = Guid.NewGuid + extension;
-				var location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterImageFiles/", newimagename);
-				var stream  = new FileStream(location,FileMode.Create);	
-				p.WriterImage.CopyTo(stream);
-				w.WriterImage = newimagename;
-            }
+		//[AllowAnonymous]
+		//[HttpPost]
+
+		//public IActionResult WriterAdd(AddProfileImage p)
+		//{
+		//	Use w = new Writer();
+		//	if (p.WriterImage != null)
+		//	{
+		//		var extension = Path.GetExtension(p.WriterImage.FileName);
+		//		var newimagename = Guid.NewGuid + extension;
+		//		var location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterImageFiles/", newimagename);
+		//		var stream = new FileStream(location, FileMode.Create);
+		//		p.WriterImage.CopyTo(stream);
+		//		w.WriterImage = newimagename;
+		//	}
 
 
 
-			w.WriterMail = p.WriterMail;
-			w.WriterName= p.WriterName;
-			w.WriterPassword= p.WriterPassword;
-			w.WriterStatus = true;
-			w.WriterAbout = p.WriterAbout;
+		//	w.WriterMail = p.WriterMail;
+		//	w.WriterName = p.WriterName;
+		//	w.WriterPassword = p.WriterPassword;
+		//	w.WriterStatus = true;
+		//	w.WriterAbout = p.WriterAbout;
 
-			wm.TAdd(w);
-			return RedirectToAction("Index", "Dashboard");
-		}
-        [Authorize]
+		//	wm.TAdd(w);
+		//	return RedirectToAction("Index", "Dashboard");
+		//}
         public PartialViewResult WriterNavbarPartial() 
 		{
             var usermail = User.Identity.Name;
             MyConnectionDbContext c = new MyConnectionDbContext();
-            var writerName = c.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterName).FirstOrDefault();
+            var writerName = c.Users.Where(x => x.UserMail == usermail).Select(y => y.UserName).FirstOrDefault();
             ViewBag.wn = writerName;
             return PartialView();
         }

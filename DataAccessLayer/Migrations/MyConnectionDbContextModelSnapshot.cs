@@ -84,14 +84,14 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("CategoryID")
                         .HasColumnType("int");
 
-                    b.Property<int>("WriterID")
+                    b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.HasKey("BlogID");
 
                     b.HasIndex("CategoryID");
 
-                    b.HasIndex("WriterID");
+                    b.HasIndex("UserID");
 
                     b.ToTable("Blogs");
                 });
@@ -307,39 +307,6 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("EntityLayer.Concrate.Writer", b =>
-                {
-                    b.Property<int?>("WriterID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("WriterAbout")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("WriterImage")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("WriterMail")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("WriterName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("WriterPassword")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("WriterStatus")
-                        .HasColumnType("tinyint(1)");
-
-                    b.HasKey("WriterID");
-
-                    b.ToTable("Writers");
-                });
-
             modelBuilder.Entity("EntityLayer.Concrate.Blog", b =>
                 {
                     b.HasOne("EntityLayer.Concrate.Category", "Category")
@@ -348,15 +315,15 @@ namespace DataAccessLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EntityLayer.Concrate.Writer", "Writer")
-                        .WithMany("Blogs")
-                        .HasForeignKey("WriterID")
+                    b.HasOne("EntityLayer.Concrate.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
 
-                    b.Navigation("Writer");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrate.Comment", b =>
@@ -376,11 +343,6 @@ namespace DataAccessLayer.Migrations
                 });
 
             modelBuilder.Entity("EntityLayer.Concrate.Category", b =>
-                {
-                    b.Navigation("Blogs");
-                });
-
-            modelBuilder.Entity("EntityLayer.Concrate.Writer", b =>
                 {
                     b.Navigation("Blogs");
                 });
